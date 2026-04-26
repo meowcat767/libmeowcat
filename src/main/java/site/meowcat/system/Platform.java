@@ -1,6 +1,11 @@
 package site.meowcat.system;
 
+/**
+ * Fetch the platform of the current machine.
+ * @author meowcat767
+ */
 public final class Platform {
+
     public static final String OS =
             System.getProperty("os.name").toLowerCase();
 

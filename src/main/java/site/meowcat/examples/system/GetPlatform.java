@@ -2,6 +2,11 @@ package site.meowcat.examples.system;
 
 import site.meowcat.system.Platform;
 
+/**
+This example shows how to get the platform of the current machine,
+using site.meowcat.system.Platform. It checks if the platform is Linux, Windows, or Mac,
+ */
+
 public class GetPlatform {
     public static void main(String[] args) {
         if (Platform.isLinux()) {
