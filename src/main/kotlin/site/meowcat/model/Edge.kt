@@ -7,6 +7,11 @@ import java.net.NetworkInterface
 import java.util.concurrent.CompletableFuture
 import site.meowcat.networking.capture.getGateway
 
+/**
+ * This code is from PKN @ https://git.meowcat.site/meowcat/PickleNetworkDebugger/src/branch/master/src/main/kotlin/site/meowcat/pkn/model/Edge.kt
+ * @author meowcat767
+ */
+
 data class Edge(val src: String, val dst: String, var weight: Int = 0, var lastRequest: String? = null, var lastPacketTime: Long = 0)
 
 object NetworkGraph {
