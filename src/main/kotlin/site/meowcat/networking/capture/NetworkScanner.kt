@@ -12,6 +12,10 @@ import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 import site.meowcat.model.NetworkGraph
 
+/**
+ * Fetches the default gateway IP address from the system routing table.
+ * @return the gateway IP address, or null if it cannot be determined
+ */
 fun getGateway(): String? {
     try {
         val process = ProcessBuilder("ip", "route", "show", "default").start()
@@ -26,10 +30,18 @@ fun getGateway(): String? {
     return null
 }
 
+/**
+ * Scans the local network to discover active nodes.
+ */
 object NetworkScanner {
+    /** Whether the initial network scan has been completed. */
     var isInitialScanComplete = false
         private set
 
+    /**
+     * Starts the background scanning process.
+     * Periodically scans all local subnets every minute.
+     */
     fun startScanning() {
         thread(isDaemon = true) {
             var firstScan = true

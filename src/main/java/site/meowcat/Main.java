@@ -2,7 +2,14 @@ package site.meowcat;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+/**
+ * Main entry point for the application.
+ */
 public class Main {
+    /**
+     * The main method that prints a welcome message and a simple loop.
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.

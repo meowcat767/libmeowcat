@@ -12,17 +12,36 @@ import site.meowcat.networking.capture.getGateway
  * @author meowcat767
  */
 
+/**
+ * Represents a flow between two network nodes.
+ * @property src Source IP address or "Internet"
+ * @property dst Destination IP address or "Internet"
+ * @property weight Number of packets in this flow
+ * @property lastRequest Optional information about the last request (e.g., HTTP path)
+ * @property lastPacketTime Timestamp of the last packet seen in this flow
+ */
 data class Edge(val src: String, val dst: String, var weight: Int = 0, var lastRequest: String? = null, var lastPacketTime: Long = 0)
 
+/**
+ * Manages the network graph, including nodes and edges.
+ */
 object NetworkGraph {
+    /** Whether to show nodes outside the local network. */
     var showExternalNodes = false
+    /** Set of discovered node IP addresses. */
     val nodes = mutableSetOf<String>()
+    /** Map of (source, destination) pairs to Edge objects. */
     val edges = mutableMapOf<Pair<String, String>, Edge>()
     private val hostNames = mutableMapOf<String, String>()
     private val localSubnets = mutableListOf<InterfaceAddress>()
     private val localCache = mutableMapOf<String, Boolean>()
     private var cachedGateway: String? = null
 
+    /**
+     * Checks if an IP address is in a private range.
+     * @param ip the IP address string
+     * @return true if private, false otherwise
+     */
     fun isPrivateIp(ip: String): Boolean {
         return ip.startsWith("10.") ||
                 ip.startsWith("192.168.") ||
@@ -89,6 +108,10 @@ object NetworkGraph {
         return true
     }
 
+    /**
+     * Adds a node to the graph if it is local.
+     * @param ip the IP address of the node
+     */
     @kotlin.jvm.Synchronized
     fun addNode(ip: String) {
         if (!isLocal(ip)) return
@@ -97,6 +120,10 @@ object NetworkGraph {
         }
     }
 
+    /**
+     * Gets the default gateway IP address.
+     * @return the gateway IP, or null if not found
+     */
     @kotlin.jvm.Synchronized
     fun getGateway(): String? {
         if (cachedGateway == null) {
@@ -105,6 +132,12 @@ object NetworkGraph {
         return cachedGateway
     }
 
+    /**
+     * Adds a flow between two IP addresses.
+     * @param src source IP address
+     * @param dst destination IP address
+     * @param requestInfo optional request metadata
+     */
     @kotlin.jvm.Synchronized
     fun addFlow(src: String, dst: String, requestInfo: String? = null) {
         val srcLocal = isLocalNode(src)
@@ -149,6 +182,10 @@ object NetworkGraph {
         }
     }
 
+    /**
+     * Gets a list of local subnets in CIDR notation.
+     * @return list of subnet strings (e.g., "192.168.1.0/24")
+     */
     fun getLocalSubnets(): List<String> {
         return localSubnets.map { addr: InterfaceAddress ->
             val ip: String = addr.address.hostAddress
@@ -227,11 +264,21 @@ object NetworkGraph {
         }
     }
 
+    /**
+     * Checks if an IP address belongs to the local network.
+     * @param ip the IP address to check
+     * @return true if local, false otherwise
+     */
     @kotlin.jvm.Synchronized
     fun isLocalNode(ip: String): Boolean {
         return localCache.getOrPut(ip) { isLocal(ip) }
     }
 
+    /**
+     * Gets a display name for an IP, including its resolved hostname if available.
+     * @param ip the IP address
+     * @return the display name
+     */
     @kotlin.jvm.Synchronized
     fun getDisplayName(ip: String): String {
         if (ip == "Internet") return "Internet"
@@ -239,6 +286,11 @@ object NetworkGraph {
         return if (hostName == ip) ip else "$hostName ($ip)"
     }
 
+    /**
+     * Gets the detected hostname for an IP, or the IP itself if not resolved.
+     * @param ip the IP address
+     * @return the hostname or IP
+     */
     @kotlin.jvm.Synchronized
     fun getDetectedName(ip: String): String {
         if (ip == "Internet") return "Internet"

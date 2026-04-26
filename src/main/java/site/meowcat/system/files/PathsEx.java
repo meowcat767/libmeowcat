@@ -120,14 +120,26 @@ public class PathsEx {
 
     // other nice features that might be useful later
 
+    /**
+     * Get the desktop directory.
+     * @return The desktop path.
+     */
     public static Path desktop() {
         return home().resolve("Desktop");
     }
 
+    /**
+     * Get the downloads directory.
+     * @return The downloads path.
+     */
     public static Path downloads() {
         return home().resolve("Downloads");
     }
 
+    /**
+     * Get the documents directory.
+     * @return The documents path.
+     */
     public static Path documents() {
         return home().resolve("Documents");
     }
