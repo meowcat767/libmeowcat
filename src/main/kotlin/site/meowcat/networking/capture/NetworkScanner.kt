@@ -1,6 +1,9 @@
 package site.meowcat.networking.capture
 
-
+/**
+ * This code is from PKN @ https://git.meowcat.site/meowcat/PickleNetworkDebugger/src/branch/master/src/main/kotlin/site/meowcat/pkn/capture/NetworkScanner.kt
+ * @author meowcat767
+ */
 import java.net.InetAddress
 import java.io.BufferedReader
 import java.io.InputStreamReader
