@@ -7,15 +7,15 @@ public class Log {
     private static final String WARNING = "\u001B[33m"; // yellow
     private static final String ERROR = "\u001B[31m"; // red
 
-    public void info(String message) {
+    public static void info(String message) {
         System.out.println(INFO + message + RESET);
     }
 
-    public void warn(String message) {
+    public static void warn(String message) {
         System.out.println(WARNING + message + RESET);
     }
 
-    public void error(String message) {
+    public static void error(String message) {
         System.out.println(ERROR + message + RESET);
     }
 }
