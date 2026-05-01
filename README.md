@@ -145,6 +145,7 @@ AppWindow.wrap(frame)
 .raw()  // Get the underlying JFrame
 ```
 
+
 #### WindowKit
 Additional UI utilities and helpers (see examples in the codebase).
 
