@@ -43,6 +43,7 @@ public final class WindowKit {
      * Runs a Runnable on the Event Dispatch Thread (EDT).
      * @param ui the UI task to run
      */
+
     public static void run(Runnable ui) {SwingUtilities.invokeLater(ui);}
     
 }
